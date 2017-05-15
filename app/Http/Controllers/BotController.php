@@ -9,8 +9,7 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Illuminate\Support\Facades\Log;
 
 class BotController extends Controller
 {
@@ -22,12 +21,9 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
-        $log = new Logger('bot-log');
-        $log->pushHandler(new StreamHandler('./resources/logs/blah.log', Logger::WARNING));
-
         $signature = $request->header($lineHeader::LINE_SIGNATURE);
         if (empty($signature)) {
-            $log->error('Bar');
+            Log::error('CUSTOM: ' . $signature);
             return response('Bad Request', 400);
         }
 
@@ -35,12 +31,16 @@ class BotController extends Controller
         try {
             $events = $bot->parseEventRequest($request->getBody(), $signature[0]);
         } catch (InvalidSignatureException $e) {
+            Log::error('CUSTOM: ' . $e);
             return response('Invalid signature', 400);
         } catch (UnknownEventTypeException $e) {
+            Log::error('CUSTOM: ' . $e);
             return response('Unknown event type has come', 400);
         } catch (UnknownMessageTypeException $e) {
+            Log::error('CUSTOM: ' . $e);
             return response('Unknown message type has come', 400);
         } catch (InvalidEventRequestException $e) {
+            Log::error('CUSTOM: ' . $e);
             return response("Invalid event request", 400);
         }
 
