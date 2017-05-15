@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 
-class BaconController extends Controller
+class BotController extends Controller
 {
-    public function delicious(Request $request){
+    public function test(Request $request){
     	$replyToken = $request->input('replyToken');
 
     	$channelAccess = env('CHANNEL_ACCESS');

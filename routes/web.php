@@ -12,9 +12,7 @@
 */
 
 Route::get('/', function () {
-	echo env('APP_DEBUG');
-	die;
     return view('welcome');
 });
 
-Route::post('/bacon', 'BaconController@delicious');
+Route::post('/bot', 'BotController@test');
