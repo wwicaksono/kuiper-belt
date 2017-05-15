@@ -11,7 +11,7 @@ use LINE\LINEBot;
 
 class BotController extends Controller
 {
-    public function test(Request $request, Response $response){
+    public function test(Request $request){
         $channelAccess = env('CHANNEL_ACCESS');
         $channelSecret = env('CHANNEL_SECRET');
         $lineHeader = new HTTPHeader();
@@ -21,38 +21,27 @@ class BotController extends Controller
 
         $signature = $request->header($lineHeader::LINE_SIGNATURE);
         if (empty($signature)) {
-            return $response->withStatus(400, 'Bad Request');
+            return response('Bad Request', 400);
         }
 
         // Check request with signature and parse request
         try {
             $events = $bot->parseEventRequest($request->getBody(), $signature[0]);
         } catch (InvalidSignatureException $e) {
-            return $response->withStatus(400, 'Invalid signature');
+            return response('Invalid signature', 400);
         } catch (UnknownEventTypeException $e) {
-            return $response->withStatus(400, 'Unknown event type has come');
+            return response('Unknown event type has come', 400);
         } catch (UnknownMessageTypeException $e) {
-            return $response->withStatus(400, 'Unknown message type has come');
+            return response('Unknown message type has come', 400);
         } catch (InvalidEventRequestException $e) {
-            return $response->withStatus(400, "Invalid event request");
+            return response("Invalid event request", 400);
         }
 
         foreach ($events as $event) {
-            if (!($event instanceof MessageEvent)) {
-                $logger->info('Non message event has come');
-                continue;
-            }
-
-            if (!($event instanceof TextMessage)) {
-                $logger->info('Non text message has come');
-                continue;
-            }
-
             $replyText = $event->getText();
             $resp = $bot->replyText($event->getReplyToken(), $replyText);
         }
 
-        $response->write('OK');
-        return $response;
+        return response('OK', 200);
     }
 }
