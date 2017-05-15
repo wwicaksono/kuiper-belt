@@ -48,7 +48,7 @@ class BotController extends Controller
             $replyText = $event->getText();
             $resp = $bot->replyText($event->getReplyToken(), $replyText);
         }
-
+        echo $resp->getHTTPStatus() . ' ' . $response->getRawBody();
         return response('OK', 200);
     }
 }
