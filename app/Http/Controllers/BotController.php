@@ -18,7 +18,7 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
-        $signature = $request->header($lineHeader->LINE_SIGNATURE);
+        $signature = $request->header($lineHeader::LINE_SIGNATURE);
         if (empty($signature)) {
             return $response->withStatus(400, 'Bad Request');
         }
