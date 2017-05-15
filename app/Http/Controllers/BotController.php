@@ -10,6 +10,7 @@ use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot;
 
 use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class BotController extends Controller
 {
