@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\Constant;
 use LINE\LINEBot;
 
 class BotController extends Controller
@@ -16,7 +17,7 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
-        $signature = $request->getHeader(HTTPHeader::LINE_SIGNATURE);
+        $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
         if (empty($signature)) {
             return $response->withStatus(400, 'Bad Request');
         }
