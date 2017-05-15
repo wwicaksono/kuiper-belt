@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+	echo env('APP_DEBUG');
+	die;
     return view('welcome');
 });
 
