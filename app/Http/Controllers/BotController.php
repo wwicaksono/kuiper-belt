@@ -12,6 +12,8 @@ class BotController extends Controller
     public function test(Request $request){
         $channelAccess = env('CHANNEL_ACCESS');
         $channelSecret = env('CHANNEL_SECRET');
+        
+        $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
         $signature = $req->getHeader(HTTPHeader::LINE_SIGNATURE);
