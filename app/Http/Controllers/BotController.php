@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use LINE\LINEBot\Constant;
+use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot;
 
 class BotController extends Controller
@@ -13,12 +13,12 @@ class BotController extends Controller
     public function test(Request $request){
         $channelAccess = env('CHANNEL_ACCESS');
         $channelSecret = env('CHANNEL_SECRET');
-        $constant = new Constant();
+        $lineHeader = new HTTPHeader();
 
         $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
-        $signature = $request->header($constant->LINE_SIGNATURE);
+        $signature = $request->header($lineHeader->LINE_SIGNATURE);
         if (empty($signature)) {
             return $response->withStatus(400, 'Bad Request');
         }
