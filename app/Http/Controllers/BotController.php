@@ -9,6 +9,8 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot;
 
+use Monolog\Logger;
+
 class BotController extends Controller
 {
     public function test(Request $request){
@@ -19,8 +21,12 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
+        $log = new Logger('bot-log');
+        $log->pushHandler(new StreamHandler('./resources/logs/blah.log', Logger::WARNING));
+
         $signature = $request->header($lineHeader::LINE_SIGNATURE);
         if (empty($signature)) {
+            $log->error('Bar');
             return response('Bad Request', 400);
         }
 
