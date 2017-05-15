@@ -12,26 +12,26 @@ class BotController extends Controller
     public function test(Request $request){
         $channelAccess = env('CHANNEL_ACCESS');
         $channelSecret = env('CHANNEL_SECRET');
-        
+
         $httpClient = new CurlHTTPClient($channelAccess);
         $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
 
-        $signature = $req->getHeader(HTTPHeader::LINE_SIGNATURE);
+        $signature = $request->getHeader(HTTPHeader::LINE_SIGNATURE);
         if (empty($signature)) {
-            return $res->withStatus(400, 'Bad Request');
+            return $response->withStatus(400, 'Bad Request');
         }
 
         // Check request with signature and parse request
         try {
-            $events = $bot->parseEventRequest($req->getBody(), $signature[0]);
+            $events = $bot->parseEventRequest($request->getBody(), $signature[0]);
         } catch (InvalidSignatureException $e) {
-            return $res->withStatus(400, 'Invalid signature');
+            return $response->withStatus(400, 'Invalid signature');
         } catch (UnknownEventTypeException $e) {
-            return $res->withStatus(400, 'Unknown event type has come');
+            return $response->withStatus(400, 'Unknown event type has come');
         } catch (UnknownMessageTypeException $e) {
-            return $res->withStatus(400, 'Unknown message type has come');
+            return $response->withStatus(400, 'Unknown message type has come');
         } catch (InvalidEventRequestException $e) {
-            return $res->withStatus(400, "Invalid event request");
+            return $response->withStatus(400, "Invalid event request");
         }
 
         foreach ($events as $event) {
@@ -49,7 +49,7 @@ class BotController extends Controller
             $resp = $bot->replyText($event->getReplyToken(), $replyText);
         }
 
-        $res->write('OK');
-        return $res;
+        $response->write('OK');
+        return $response;
     }
 }
