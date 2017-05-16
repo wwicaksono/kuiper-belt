@@ -31,7 +31,7 @@ class Route
 {
     public function register(\Slim\App $app)
     {
-        $app->post('/', function (\Slim\Http\Request $req, \Slim\Http\Response $res) {
+        $app->post('/callback', function (\Slim\Http\Request $req, \Slim\Http\Response $res) {
             /** @var \LINE\LINEBot $bot */
             $bot = $this->bot;
             /** @var \Monolog\Logger $logger */
