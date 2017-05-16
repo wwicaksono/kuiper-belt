@@ -8,8 +8,7 @@
         "php": ">=5.6.4",
         "laravel/lumen-framework": "5.4.*",
         "vlucas/phpdotenv": "~2.2",
-        "slim/slim": "^3.8",
-        "linecorp/line-bot-sdk": "^1.6"
+        "linecorp/line-bot-sdk": "^1.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
