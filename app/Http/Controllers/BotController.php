@@ -23,8 +23,7 @@ class BotController extends Controller
 
         $signature = $request->header($lineHeader::LINE_SIGNATURE);
         if (empty($signature)) {
-            Log::error('CUSTOM: ' . $signature);
-            return response('Bad Request', 400);
+            // return response('Bad Request', 400);
         }
 
         // Check request with signature and parse request
