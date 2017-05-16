@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "20f47bc229b8f2593ba71b997491f5dd",
+    "content-hash": "687df4a2a1918de1f64f91de7a3004e3",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1248,6 +1248,59 @@
                 "lumen"
             ],
             "time": "2017-04-03T21:20:22+00:00"
+        },
+        {
+            "name": "linecorp/line-bot-sdk",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/line/line-bot-sdk-php.git",
+                "reference": "d827436f59d0081ce4e1e49ede4861648f8a0bca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/d827436f59d0081ce4e1e49ede4861648f8a0bca",
+                "reference": "d827436f59d0081ce4e1e49ede4861648f8a0bca",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "apigen/apigen": "~4.1",
+                "indigophp/hash-compat": "~1.1.0",
+                "phpmd/phpmd": "~2.4",
+                "phpunit/phpunit": "^4.8.24",
+                "squizlabs/php_codesniffer": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LINE\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License Version 2.0"
+            ],
+            "authors": [
+                {
+                    "name": "moznion",
+                    "email": "moznion@gmail.com"
+                },
+                {
+                    "name": "Satoru Yoshihara",
+                    "email": "vaduz0@gmail.com"
+                }
+            ],
+            "description": "SDK of the LINE BOT API for PHP",
+            "homepage": "https://github.com/line/line-bot-sdk-php",
+            "keywords": [
+                "bot",
+                "line",
+                "sdk"
+            ],
+            "time": "2017-04-27T05:32:19+00:00"
         },
         {
             "name": "monolog/monolog",
