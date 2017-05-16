@@ -38,7 +38,7 @@ class BotController extends Controller
 
         $signature = $request->header('X_LINE_SIGNATURE');
         if (empty($signature)) {
-            return (new Response($request, 400));
+            return (new Response('OK', 200));
         }
 
         try {
