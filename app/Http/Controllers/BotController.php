@@ -37,14 +37,14 @@ class BotController extends Controller
             if ($event instanceof LINEBotMessageEvent) {
                 return $bot->replyMessage(
                     $event->getReplyToken(),
-                    new TextMessageBuilder("apa sih");
+                    new TextMessageBuilder("apa sih")
                 );
                 // $res = (new MessageEventHandler($bot, $event))->handle();
             }
             if ($event instanceof LINEBotPostbackEvent) {
                 return $bot->replyMessage(
                     $event->getReplyToken(),
-                    new TextMessageBuilder("postback neeh sih");
+                    new TextMessageBuilder("postback neeh sih")
                 );
                 // $res = (new PostbackEventHandler($bot, $event))->handle();
             }
