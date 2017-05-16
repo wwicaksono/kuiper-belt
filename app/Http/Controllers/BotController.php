@@ -31,16 +31,12 @@ class BotController extends Controller
         try {
             $events = $bot->parseEventRequest($request->getBody(), $signature[0]);
         } catch (InvalidSignatureException $e) {
-            Log::error('CUSTOM: ' . $e);
             return response('Invalid signature', 400);
         } catch (UnknownEventTypeException $e) {
-            Log::error('CUSTOM: ' . $e);
             return response('Unknown event type has come', 400);
         } catch (UnknownMessageTypeException $e) {
-            Log::error('CUSTOM: ' . $e);
             return response('Unknown message type has come', 400);
         } catch (InvalidEventRequestException $e) {
-            Log::error('CUSTOM: ' . $e);
             return response("Invalid event request", 400);
         }
 
@@ -48,7 +44,6 @@ class BotController extends Controller
             $replyText = $event->getText();
             $resp = $bot->replyText($event->getReplyToken(), $replyText);
         }
-        echo $resp->getHTTPStatus() . ' ' . $response->getRawBody();
         return response('OK', 200);
     }
 }
