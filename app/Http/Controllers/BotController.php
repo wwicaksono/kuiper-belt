@@ -36,7 +36,7 @@ class BotController extends Controller
             'channelSecret' => env('CHANNEL_SECRET')
         ]);
 
-        $signature = $request->header('X-Forwarded-Port');
+        $signature = $request->header('X-Line-Signature');
         if (empty($signature)) {
             return (new Response($request, 400));
         }
