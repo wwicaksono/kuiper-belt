@@ -23,12 +23,12 @@ class BotController extends Controller
 
         $signature = $request->header($lineHeader::LINE_SIGNATURE);
         if (empty($signature)) {
-            // return response('Bad Request', 400);
+            return response('Bad Request', 400);
         }
 
         // Check request with signature and parse request
         try {
-            $events = $bot->parseEventRequest($request->getBody(), $signature[0]);
+            $events = $bot->parseEventRequest($request->getContent(), $signature[0]);
         } catch (InvalidSignatureException $e) {
             return response('Invalid signature', 400);
         } catch (UnknownEventTypeException $e) {
