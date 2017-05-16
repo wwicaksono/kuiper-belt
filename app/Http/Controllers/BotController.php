@@ -2,47 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\Constant\HTTPHeader;
-use LINE\LINEBot;
+use LINE\LINEBot\Event\MessageEvent as LINEBotMessageEvent;
+use LINE\LINEBot\Event\PostbackEvent as LINEBotPostbackEvent;
+use LINE\LINEBot\Exception\InvalidEventRequestException;
+use LINE\LINEBot\Exception\InvalidSignatureException;
+use LINE\LINEBot\Exception\UnknownEventTypeException;
+use LINE\LINEBot\Exception\UnknownMessageTypeException;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+
+use App\Handlers\MessageEventHandler;
 
 class BotController extends Controller
 {
-    public function test(Request $request){
-        $channelAccess = env('CHANNEL_ACCESS');
-        $channelSecret = env('CHANNEL_SECRET');
-        $lineHeader = new HTTPHeader();
-
-        $httpClient = new CurlHTTPClient($channelAccess);
-        $bot = new LINEBot($httpClient, ['channelSecret' => $channelSecret]);
-
-        $signature = $request->header($lineHeader::LINE_SIGNATURE);
-        if (empty($signature)) {
-            return response('Bad Request', 400);
-        }
-
-        // Check request with signature and parse request
-        try {
-            $events = $bot->parseEventRequest($request->getContent(), $signature[0]);
-        } catch (InvalidSignatureException $e) {
-            return response('Invalid signature', 400);
-        } catch (UnknownEventTypeException $e) {
-            return response('Unknown event type has come', 400);
-        } catch (UnknownMessageTypeException $e) {
-            return response('Unknown message type has come', 400);
-        } catch (InvalidEventRequestException $e) {
-            return response("Invalid event request", 400);
-        }
-
-        foreach ($events as $event) {
-            $replyText = $event->getText();
-            $resp = $bot->replyText($event->getReplyToken(), $replyText);
-        }
-        return response('OK', 200);
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
     }
+
+    public function callback(LINEBot $bot, Request $request){
+
+        $events = $request->botevents;
+        foreach ($events as $event) {
+            /** @var \LINE\LINEBot\Response */
+            $res = null;
+            if ($event instanceof LINEBotMessageEvent) {
+                return $bot->replyMessage(
+                    $event->getReplyToken(),
+                    new TextMessageBuilder("apa sih");
+                );
+                // $res = (new MessageEventHandler($bot, $event))->handle();
+            }
+            if ($event instanceof LINEBotPostbackEvent) {
+                return $bot->replyMessage(
+                    $event->getReplyToken(),
+                    new TextMessageBuilder("postback neeh sih");
+                );
+                // $res = (new PostbackEventHandler($bot, $event))->handle();
+            }
+            if ($res !== null && ! $res->isSucceeded()) {
+                // app('log')->error($res->getHTTPStatus() . ': ' . $res->getRawBody());
+            }
+        }
+    }
+
 }
