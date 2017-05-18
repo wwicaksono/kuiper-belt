@@ -1,21 +1,46 @@
-# Lumen PHP Framework
+line-echo-bot-sample
+==
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+A sample echo bot implementation of the LINE Messaging API.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+This project uses the [Slim framework](http://www.slimframework.com/).
 
-## Official Documentation
+Getting started
+--
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+```
+$ curl -sS https://getcomposer.org/installer | php # Install composer.phar
+$ ./composer.phar install
+$ $EDITOR ./src/LINEBot/EchoBot/Setting.php # <= edit your bot information
+$ php -S 0.0.0.0:8080 -t public
+```
 
-## Security Vulnerabilities
+Hints
+--
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+### [public/index.php](./public/index.php)
 
-## License
+Entry point of this application.
 
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+### [src/LINEBot/EchoBot/Route.php](./src/LINEBot/EchoBot/Route.php)
+
+Core logic of this application that uses the LINE Messaging API.
+
+License
+--
+
+```
+Copyright 2016 LINE Corporation
+
+LINE Corporation licenses this file to you under the Apache License,
+version 2.0 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at:
+
+  https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+```

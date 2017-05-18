@@ -48,20 +48,10 @@ class BeaconDetectionEvent extends BaseEvent
     /**
      * Returns type of beacon event.
      *
-     * @return string
+     * @return String
      */
     public function getBeaconEventType()
     {
         return $this->event['beacon']['type'];
-    }
-
-    /**
-     * Returns device message of the beacon.
-     *
-     * @return string a binary string containing data
-     */
-    public function getDeviceMessage()
-    {
-        return pack('H*', $this->event['beacon']['dm']);
     }
 }
