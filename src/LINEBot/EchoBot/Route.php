@@ -75,5 +75,10 @@ class Route
             $res->write('OK');
             return $res;
         });
+
+        $app->get('/test', function (\Slim\Http\Request $req, \Slim\Http\Response $res) {
+
+            echo 'asd';
+        });
     }
 }
